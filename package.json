@@ -22,13 +22,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sawsew467/tiktok-kit.git"
+    "url": "git+https://github.com/LeDucAnhPhuong/tiktok-kit.git"
   },
-  "homepage": "https://github.com/sawsew467/tiktok-kit#readme",
+  "homepage": "https://github.com/LeDucAnhPhuong/tiktok-kit#readme",
   "bugs": {
-    "url": "https://github.com/sawsew467/tiktok-kit/issues"
+    "url": "https://github.com/LeDucAnhPhuong/tiktok-kit/issues"
   },
-  "author": "sawsew467",
+  "author": "LeDucAnhPhuong",
   "keywords": [
     "tiktok",
     "claude-code",
