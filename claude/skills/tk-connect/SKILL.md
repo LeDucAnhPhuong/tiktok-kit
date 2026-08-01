@@ -48,15 +48,22 @@ the user's time:
 | `registered-but-empty` | tool responds, returns no sources or accounts | link the TikTok account on the vendor platform |
 | `connected` | tool returns real accounts or fields | none |
 
-Two causes account for most gaps, and both look identical to a plain "not connected":
+Four causes account for nearly every gap, and all four look identical to a plain "not
+connected". Work down this list before suspecting anything else:
 
-- **Client not restarted.** The server is in `.mcp.json` but the session predates it,
-  so the tool is absent. If `.tk.json` records a vendor for a plane whose tool is
-  missing, say restart first.
-- **Authorization expired.** The official ads server authorizes for 30 days. A plane
-  that worked last month goes quiet with no other change. When the ads plane is
-  `registered-but-empty` and its vendor is the official server, name re-authorization
-  as the first thing to check — not a broken setup.
+1. **Client not restarted.** The server is in `.mcp.json` but the session predates it,
+   so the tool is absent entirely.
+2. **Project server not approved.** Claude Code gates project-scoped `.mcp.json`
+   servers behind an approval prompt. Declined or dismissed, the server never loads.
+   `claude mcp reset-project-choices` clears the decision.
+3. **Never authorized.** The server connects, but no OAuth has happened, so every call
+   returns nothing. The fix is `/mcp` → select the server → Authenticate. This is the
+   most common false alarm: the setup looks complete and reads empty.
+4. **Authorization expired.** The official ads server authorizes for 30 days. A plane
+   that worked last month goes quiet with no other change. Same fix as 3.
+
+When the ads plane is `registered-but-empty` and `.tk.json` records the official
+vendor, name causes 3 and 4 first. Do not describe the setup as broken.
 
 ### 2. Report
 

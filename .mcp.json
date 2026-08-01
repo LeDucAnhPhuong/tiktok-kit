@@ -1,7 +1,8 @@
 {
   "mcpServers": {
     "tiktok-ads": {
-      "url": "https://business-api.tiktok.com/open_mcp/tt-ads-mcp-layer"
+      "type": "http",
+      "url": "https://business-api.tiktok.com/open_mcp/tt-ads-mcp-flat"
     }
   }
 }

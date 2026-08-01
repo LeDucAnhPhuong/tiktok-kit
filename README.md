@@ -13,15 +13,21 @@ npm install -g tiktok-kit
 tk init
 ```
 
-That is the whole setup. `tk init` installs the kit and connects TikTok Ads — **no API
-key, no developer app, no questions**. It writes `.mcp.json` pointing at TikTok's own
-MCP server; you sign in through the browser the first time Claude connects.
+That is the whole setup on the CLI side. `tk init` installs the kit and connects TikTok
+Ads — **no API key, no developer app, no questions**. It writes `.mcp.json` pointing at
+TikTok's own MCP server.
 
-Then restart Claude Code and verify:
+Then, inside Claude Code:
 
-```
-/tk:connect
-```
+1. **Restart** so the new server is picked up.
+2. **Approve** the project MCP server when prompted — Claude Code gates project-scoped
+   `.mcp.json` servers before first use.
+3. **`/mcp`** → pick `tiktok-ads` → **Authenticate**. A browser opens: sign in to TikTok
+   Ads Manager, review the permissions, click Authorize.
+4. **`/tk:connect`** to verify data is flowing.
+
+Step 3 is the one people skip. Without it the server is connected but unauthorized, and
+every plane reads empty — which looks exactly like a broken setup.
 
 Works standalone. If ClaudeKit is installed, `tk init` registers itself in `.ck.json`
 so the two kits do not overwrite each other's settings.
