@@ -7,7 +7,49 @@ holds.
 Present **both** paths with their trade-offs. Do not default silently — which token
 custody model a user accepts is their decision, not the kit's.
 
-## Path A — Hosted, covers both planes
+## Path A — TikTok official, ads only
+
+The default. Straight to TikTok, nobody in the middle.
+
+| | |
+|---|---|
+| Setup time | ~2 minutes |
+| Approval wait | none — no developer app required |
+| Cost | free; bound by TikTok Marketing API rate limits |
+| Coverage | **ads only** |
+| **Token custody** | TikTok itself. No third party involved |
+
+Steps:
+
+1. Add the server. Config is a bare URL:
+
+```json
+{
+  "mcpServers": {
+    "tiktok-ads": {
+      "url": "https://business-api.tiktok.com/open_mcp/tt-ads-mcp-flat"
+    }
+  }
+}
+```
+
+   Use `.../tt-ads-mcp-layer` instead when context is tight — ~40 core tools loaded
+   with the rest discovered on demand, versus ~400 loaded up front.
+
+2. Restart the client. On first connect it prompts you to sign in to TikTok Ads
+   Manager and authorize.
+3. Re-run `/tk:connect`.
+
+**Authorization lasts 30 days.** After that the plane goes quiet and needs
+re-authorizing with the same account — the most likely cause of an ads plane that
+worked last month and does not today.
+
+**This surface can write.** Campaign creation and budget edits are reachable through
+it. This kit does not use them, but that restraint is a rule, not a wall.
+
+No organic coverage. Pair with Path B when follower and content data matter.
+
+## Path B — Hosted vendor, covers both planes
 
 Covers ads and organic through one connection and one key.
 
@@ -43,7 +85,7 @@ Steps:
 Tools exposed: `list_connections`, `list_accounts`, `list_fields`,
 `query_marketing_data`.
 
-## Path B — Self-hosted, ads only
+## Path C — Self-hosted, ads only
 
 No third party holds the token, but the setup is longer and the coverage is narrower.
 
@@ -81,7 +123,7 @@ and raw ad group targeting.
 
 Treat the token file like a password. Deleting it disconnects the account.
 
-## Path C — External plane, optional
+## Path D — External plane, optional
 
 Public content search and transcripts, for the Outside half of research.
 `seym0n/tiktok-mcp`, Node 18+, requires a third-party API key (TikNeuron).
@@ -102,9 +144,17 @@ Tools: `tiktok_search`, `tiktok_get_post_details`, `tiktok_get_subtitle`.
 
 ## Recommended Combination
 
-Path A alone is enough to start and is the only one usable the same day. Path B is
-worth adding when tracking-health verification matters — without it `dataTrust` can
-never reach `trusted`. Path C only when research is a regular need.
+**Start with Path A.** It is the fastest, costs nothing, and puts no third party
+between the account and the agent.
+
+Add **Path B** when organic matters — it is the only route to follower, video, and
+completion data, and Path A does not cover any of it.
+
+**Path C** only when you specifically want tracking-health verification without a
+hosted vendor. **Path D** only when research is a regular need.
+
+A common pairing is A + B: official for ads, vendor for organic. Both planes live, and
+only the organic half passes through a third party.
 
 ## Budget By Tier
 
@@ -112,12 +162,15 @@ Set `budget.maxQueriesPerRun` in `.tk.json` to match the plan:
 
 | Situation | Suggested |
 |---|---|
-| Free tier, metered monthly | 6 — roughly five runs per month |
-| Paid tier | 12 (default) |
-| Self-hosted only, rate-limited not metered | 20 |
+| Metered vendor, free tier | 6 — roughly five runs per month |
+| Metered vendor, paid tier | 12 (default) |
+| Official or self-hosted — rate-limited, not metered | 20 |
 
-## Official TikTok Path — Not Available
+## Coverage At A Glance
 
-TikTok's own Ads MCP and Agentic Hub exist but expose no public endpoint or tool
-schema for an external client to connect to. When that changes, this file and
-`mcp-tool-matrix.md` are the only two files that need editing.
+| Plane | Path A official | Path B hosted | Path C self-hosted | Path D content |
+|---|---|---|---|---|
+| ads | ✅ | ✅ | ✅ | — |
+| organic | — | ✅ | — | — |
+| external | — | — | — | ✅ |
+| pixel health → `dataTrust` | check the tool list | — | ✅ | — |

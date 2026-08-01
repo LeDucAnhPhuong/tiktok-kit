@@ -68,15 +68,22 @@ authority of the data.
 
 ## Connecting Your Data
 
-`tk connect` (also run by `tk init`) offers three options and states the trade-off
+`tk connect` (also run by `tk init`) offers four options and states the trade-off
 before you authorize anything:
 
-- **Hosted** — covers ads and organic, ~15 minutes, free tier available. **A third
-  party holds your TikTok OAuth token.**
-- **Self-hosted** — no third party holds tokens, but ads-only and requires a TikTok
-  developer app that TikTok must approve first. Adds the pixel-health check, without
-  which `dataTrust` can never reach `trusted`.
-- **Content plane** — optional, for the outside half of research.
+| Option | Covers | Setup | Who holds your token |
+|---|---|---|---|
+| **TikTok official** — start here | ads | ~2 min, browser sign-in | TikTok. Nobody in the middle |
+| Hosted vendor | ads + **organic** | ~15 min, API key | a third party |
+| Self-hosted | ads | needs a TikTok developer app TikTok must approve | your machine |
+| Content plane | external | optional, for research | third-party API |
+
+The official server needs no developer app and no approval — it is a bare URL and a
+browser sign-in. **Its authorization expires after 30 days**, which is the usual reason
+an ads plane that worked last month has gone quiet.
+
+It does not cover organic. A common pairing is official for ads plus a hosted vendor
+for organic, so only the organic half passes through a third party.
 
 ### Where your key goes
 

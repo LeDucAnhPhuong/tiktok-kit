@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "files": [
     {
       "path": "agents/tiktok-creative-strategist.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": "metadata.json",
-      "checksum": "72d6b60533224055abd88440997d60bbeba60f86cae336ec3130bcd954dda4f0",
+      "checksum": "70e6bbe8eb578add0d5d361825004ab0b0ee3420ca13b892f6cabf51c7fb0cba",
       "size": 85
     },
     {
@@ -58,8 +58,8 @@
     },
     {
       "path": "skills/_shared/tiktok/connection-setup.md",
-      "checksum": "9fd1adfcf60a49ca523cdd703d6f69bb20942341d7d3729f8bef4fb34ba5fbe5",
-      "size": 3619
+      "checksum": "b729ceda44bc5cea927a1c83310f010cbed6abcdf33fefed5d564521734238f6",
+      "size": 5257
     },
     {
       "path": "skills/_shared/tiktok/diagnostic-thresholds.md",
@@ -68,8 +68,8 @@
     },
     {
       "path": "skills/_shared/tiktok/mcp-tool-matrix.md",
-      "checksum": "579439749e1a8041533c4022d55329ecbcee6a0e441d9301524fcefc9e72de4a",
-      "size": 4547
+      "checksum": "518deb7977b6eb897dc1d79d62e937ce2a3f9c2dc48b970706590dcee0bf210f",
+      "size": 5747
     },
     {
       "path": "skills/_shared/tiktok/metric-glossary.md",
@@ -93,8 +93,8 @@
     },
     {
       "path": "skills/tk-connect/SKILL.md",
-      "checksum": "b46d9a50114d5a400e8b9f2b9529dc25d66f7c9b25a3d439d655e19417093759",
-      "size": 3398
+      "checksum": "d38635cab5cccc3d94ae443f5e321fb2e744e23a319f762ee05424867fdbfe98",
+      "size": 3707
     },
     {
       "path": "skills/tk-creative/references/creative-analysis-rubric.md",

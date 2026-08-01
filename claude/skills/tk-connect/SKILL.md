@@ -48,10 +48,15 @@ the user's time:
 | `registered-but-empty` | tool responds, returns no sources or accounts | link the TikTok account on the vendor platform |
 | `connected` | tool returns real accounts or fields | none |
 
-A common third case worth naming explicitly: the server is configured but Claude Code
-has not been restarted since, so the tool is still absent. If `.tk.json` records a
-vendor for a plane whose tool is missing, say that a restart is the likely fix before
-suggesting anything else.
+Two causes account for most gaps, and both look identical to a plain "not connected":
+
+- **Client not restarted.** The server is in `.mcp.json` but the session predates it,
+  so the tool is absent. If `.tk.json` records a vendor for a plane whose tool is
+  missing, say restart first.
+- **Authorization expired.** The official ads server authorizes for 30 days. A plane
+  that worked last month goes quiet with no other change. When the ads plane is
+  `registered-but-empty` and its vendor is the official server, name re-authorization
+  as the first thing to check — not a broken setup.
 
 ### 2. Report
 
