@@ -14,6 +14,7 @@ const GATES = [
   'check-threshold-provenance.cjs',
   'check-query-budget.cjs',
   'check-research-citations.cjs',
+  'check-language-contract.cjs',
   'check-metadata-deletions.cjs',
   'check-manifest-fresh.cjs',
 ];

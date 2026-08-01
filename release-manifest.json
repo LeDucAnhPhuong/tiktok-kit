@@ -1,29 +1,29 @@
 {
-  "version": "0.4.1",
+  "version": "0.5.0",
   "files": [
     {
       "path": "agents/tiktok-creative-strategist.md",
-      "checksum": "3d07fd880db5657e00ea8c802dbd75a12495e55b3bcf64bca2181ecc345d228f",
-      "size": 3260
+      "checksum": "744d7ac1f087d8546670703311edd76665dd8277390d63764ac39fb47faa2890",
+      "size": 3550
     },
     {
       "path": "agents/tiktok-data-analyst.md",
-      "checksum": "21b8fb66975a5683de244891c71d17ca37b914a0a3a482db25a5848e627ed904",
-      "size": 3426
+      "checksum": "c0c8212106904317b4574e24099bc4aa19e5e4f4e03f107e3625fe7377c8c040",
+      "size": 3716
     },
     {
       "path": "agents/tiktok-growth-strategist.md",
-      "checksum": "c0c914a630e92e26e397bd4de06280d88522a8f1ad7171aebf09664cf62db986",
-      "size": 3295
+      "checksum": "83f76d5fa5b97991e77de64a5ddb4beb876e7fc3f7141319d74eabdf526600c0",
+      "size": 3585
     },
     {
       "path": "agents/tiktok-trend-researcher.md",
-      "checksum": "2b01b5584c0e01416f5af88206dabebd8cdefd81f17033d1801f386c50a55ab0",
-      "size": 3196
+      "checksum": "8038838f79dd921d80c32ac10251eaa370d341238ad9c596f76d9a468752b6ed",
+      "size": 3486
     },
     {
       "path": "metadata.json",
-      "checksum": "fb444b49b6436208c7c1b360ffe47121b2be6db3a52d1600b05d1e0815e20b0d",
+      "checksum": "8266dec0162a372ff87775dba711a21bdfa3b0fcfbceb827f067a213776fa7d0",
       "size": 85
     },
     {
@@ -42,14 +42,19 @@
       "size": 2193
     },
     {
+      "path": "rules/tiktok-output-language.md",
+      "checksum": "c774ae6028fd4c1012289dd3e8b868b2a231020c8c23ce55e5aebc3990f61525",
+      "size": 2259
+    },
+    {
       "path": "rules/tiktok-research-rules.md",
       "checksum": "4023cd4962cbc006ebe7601f36ef6aa64d017411b1c986508f4f644bbebb4356",
       "size": 2506
     },
     {
       "path": "schemas/tk-config.schema.json",
-      "checksum": "db7ab33bcbcc78b528d2aa169ee79242822e6e7abcf19555d5a8619cdafa796a",
-      "size": 2363
+      "checksum": "7e1e3ee7d8f9c3c1c5d1fafeb4eb9698a696144fbabb384f5681a669893081a4",
+      "size": 2792
     },
     {
       "path": "settings.json",
@@ -88,13 +93,13 @@
     },
     {
       "path": "skills/tk-account/SKILL.md",
-      "checksum": "d44c8ffdf11b36027f4d6c17b38f573472f78d53d6ac413865724209ca69b1bc",
-      "size": 3065
+      "checksum": "0559cd67800de872c51ce4daa005f3668e1336cf4b6557a7e7f6c35d010a4d16",
+      "size": 3496
     },
     {
       "path": "skills/tk-connect/SKILL.md",
-      "checksum": "13c262471470b85b14f3717f14b7de9a6f639d3ad3fdd82221cd7d39e5ceba80",
-      "size": 4177
+      "checksum": "b6da6e665eb148c2d32b64b8b45a6b0d2d8ee1555c1d78c39785ee087cd09c10",
+      "size": 4608
     },
     {
       "path": "skills/tk-creative/references/creative-analysis-rubric.md",
@@ -103,8 +108,8 @@
     },
     {
       "path": "skills/tk-creative/SKILL.md",
-      "checksum": "e81a15d3245cbd13a1734fa5c7a4122cb8c542ef05cdbbd2cfaba8f9d809530a",
-      "size": 3009
+      "checksum": "59d4347a513e752e0f589c2a2a119066a3bca1b955e6f1d2e2aedad82e6d64f8",
+      "size": 3440
     },
     {
       "path": "skills/tk-diagnose/references/cross-plane-checks.md",
@@ -113,13 +118,13 @@
     },
     {
       "path": "skills/tk-diagnose/SKILL.md",
-      "checksum": "48332ba93f9a1e591f65796fb0f102ff03bac3d523a80c89f7d2691998b9789d",
-      "size": 3021
+      "checksum": "2d8a38bd6e914526b839cd535f06771628486ab9573b1b0d849438ca8f663b50",
+      "size": 3452
     },
     {
       "path": "skills/tk-direction/SKILL.md",
-      "checksum": "51e03453c76a201b5e270dc44db7d7aadc9dbe7886df59f288dd3ea92e91ff25",
-      "size": 3355
+      "checksum": "010a0e3f52977517742576049a9b34cc8c3ff8ceb61e1cfe56aa80f23c858947",
+      "size": 3786
     },
     {
       "path": "skills/tk-direction/templates/direction-report.md",
@@ -138,8 +143,8 @@
     },
     {
       "path": "skills/tk-research/SKILL.md",
-      "checksum": "de660295c255afaf36fa0ca43022d77ae7c4931877e3bf6a460db97f0e8c2098",
-      "size": 3410
+      "checksum": "d4a584bb2e23ce2d60712dca939ddb7dfc650acac1c65daf55218b53cfe53309",
+      "size": 3841
     },
     {
       "path": "skills/tk-research/templates/research-report.md",

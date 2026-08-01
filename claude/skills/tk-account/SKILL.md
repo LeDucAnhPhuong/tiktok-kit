@@ -80,6 +80,16 @@ Missing planes never fail the run. Report what is unavailable and what that cost
 Baseline block plus a plain-language summary of what this account is, and an explicit
 statement of the `dataTrust` verdict and its consequence.
 
+## Language
+
+Read `locale.responseLanguage` from `.claude/.tk.json` — `vi` (default) or `en` — and
+write prose in that language. An explicit request in the conversation overrides it for
+the rest of the session.
+
+Never translate metric names, numeric values, entity names, threshold keys, or
+`dataTrust` values: the user has to be able to match them against TikTok Ads Manager.
+Full rules in `rules/tiktok-output-language.md`.
+
 ## Workflow Position
 
 **Previous:** `/tk:connect`

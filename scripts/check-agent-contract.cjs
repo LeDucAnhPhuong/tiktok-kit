@@ -11,7 +11,15 @@ const path = require('path');
 const { PAYLOAD, SHARED, walk, markdownFiles, read, rel, frontmatter, agentRegistry, report } = require('./lib/payload.cjs');
 
 const AGENT_MENTION = /\b(tiktok-[a-z-]+)\b/g;
-const KNOWN_NON_AGENTS = new Set(['tiktok-data-rules', 'tiktok-mcp-routing', 'tiktok-agent-protocol', 'tiktok-research-rules', 'tiktok-kit']);
+// Rule filenames share the tiktok-* shape but are not agents.
+const KNOWN_NON_AGENTS = new Set([
+  'tiktok-data-rules',
+  'tiktok-mcp-routing',
+  'tiktok-agent-protocol',
+  'tiktok-research-rules',
+  'tiktok-output-language',
+  'tiktok-kit',
+]);
 
 function main() {
   const failures = [];

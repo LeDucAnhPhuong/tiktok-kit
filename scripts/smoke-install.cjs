@@ -49,7 +49,7 @@ function main() {
   // --- standalone ---
   const a = path.join(tmp, 'standalone');
   fs.mkdirSync(a);
-  tk(a, 'init');
+  tk(a, 'init', '--scope', 'project');
   const claudeA = path.join(a, '.claude');
   check('standalone: payload installed', fs.existsSync(path.join(claudeA, 'metadata.json')));
   check('standalone: skills installed', fs.existsSync(path.join(claudeA, 'skills', 'tk-connect', 'SKILL.md')));
@@ -58,7 +58,7 @@ function main() {
   check('standalone: no empty settings.json', !fs.existsSync(path.join(claudeA, 'settings.json')));
 
   const firstCount = countFiles(claudeA);
-  tk(a, 'init');
+  tk(a, 'init', '--scope', 'project');
   check('idempotent: re-init adds nothing', countFiles(claudeA) === firstCount);
   check('status: runs clean', tk(a, 'status').includes('data planes'));
 
@@ -72,9 +72,17 @@ function main() {
 
   const c = path.join(tmp, 'layered');
   fs.mkdirSync(c);
-  tk(c, 'init', '--layered');
+  tk(c, 'init', '--layered', '--scope', 'project');
   const mcpC = readJson(path.join(c, '.mcp.json'));
   check('--layered: picks the lighter server', mcpC?.mcpServers?.['tiktok-ads']?.url?.includes('tt-ads-mcp-layer'));
+
+  const cfgA = readJson(path.join(a, '.claude', '.tk.json'));
+  check('language: defaults to vi unattended', cfgA?.locale?.responseLanguage === 'vi');
+
+  const e = path.join(tmp, 'lang-en');
+  fs.mkdirSync(e);
+  tk(e, 'init', '--lang', 'en', '--no-connect');
+  check('--lang en: honoured', readJson(path.join(e, '.claude', '.tk.json'))?.locale?.responseLanguage === 'en');
 
   const d = path.join(tmp, 'no-connect');
   fs.mkdirSync(d);

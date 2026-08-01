@@ -10,7 +10,9 @@ tk — TikTok Kit for Claude Code
 Usage
   tk init [-g|--global]    Install the kit and connect TikTok Ads. No questions asked
   tk init --layered        Connect the lighter ~40-tool server instead of the full one
-  tk init --no-connect     Install only, do not touch .mcp.json
+  tk init --no-connect     Install only, do not register any MCP server
+  tk init --lang vi|en     Set output language without being asked
+  tk init --scope project  Register in .mcp.json so teammates get it via git
   tk connect               Reconnect or switch tool surface
   tk connect --advanced    Add other sources — organic data lives here
   tk status                Show install mode, version, and connected data planes
@@ -30,12 +32,16 @@ function parse(argv) {
   const connect = !args.includes('--no-connect');
   const advanced = args.includes('--advanced');
   const variant = args.includes('--layered') ? 'layer' : 'flat';
+  const scopeArg = args[args.indexOf('--scope') + 1];
+  const scope = args.includes('--scope') && scopeArg === 'project' ? 'project' : 'user';
+  const langArg = args[args.indexOf('--lang') + 1];
+  const lang = args.includes('--lang') && ['vi', 'en'].includes(langArg) ? langArg : null;
   const command = args.find((a) => !a.startsWith('-'));
-  return { command, global, connect, advanced, variant, args };
+  return { command, global, connect, advanced, variant, scope, lang, args };
 }
 
 async function main() {
-  const { command, global, connect, advanced, variant, args } = parse(process.argv);
+  const { command, global, connect, advanced, variant, scope, lang, args } = parse(process.argv);
 
   if (args.includes('--version') || args.includes('-v')) {
     console.log(require('../package.json').version);
@@ -44,9 +50,9 @@ async function main() {
 
   switch (command) {
     case 'init':
-      return runInit({ global, connect, variant });
+      return runInit({ global, connect, variant, lang, scope });
     case 'connect':
-      return runConnect({ interactive: true, advanced, variant });
+      return runConnect({ interactive: true, advanced, variant, scope });
     case 'status':
       return runStatus({ global });
     case 'remove':

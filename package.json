@@ -1,6 +1,6 @@
 {
   "name": "tiktok-kit",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "TikTok account intelligence kit for Claude Code. Read-only analysis of ads and organic data over MCP, producing a prioritized growth direction.",
   "bin": {
     "tk": "./bin/tk.js"

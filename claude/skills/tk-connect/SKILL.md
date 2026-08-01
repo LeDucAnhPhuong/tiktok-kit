@@ -9,7 +9,7 @@ license: MIT
 argument-hint: "[plane]"
 metadata:
   author: tiktok-kit
-  version: "0.2.0"
+  version: "0.5.0"
 ---
 
 # tk:connect
@@ -85,6 +85,16 @@ Leave `vendor` as the CLI set it.
 Plane status table, the specific blocker per gap, and the single next command to run.
 
 When nothing is connected, say so plainly and stop. Never fabricate a baseline.
+
+## Language
+
+Read `locale.responseLanguage` from `.claude/.tk.json` — `vi` (default) or `en` — and
+write prose in that language. An explicit request in the conversation overrides it for
+the rest of the session.
+
+Never translate metric names, numeric values, entity names, threshold keys, or
+`dataTrust` values: the user has to be able to match them against TikTok Ads Manager.
+Full rules in `rules/tiktok-output-language.md`.
 
 ## Workflow Position
 
