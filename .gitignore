@@ -1,0 +1,7 @@
+node_modules/
+*.log
+*.tgz
+.DS_Store
+
+# Local install artifacts
+.claude/settings.json.tk-backup-*

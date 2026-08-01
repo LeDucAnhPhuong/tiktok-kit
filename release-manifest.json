@@ -1,0 +1,150 @@
+{
+  "version": "0.1.0",
+  "files": [
+    {
+      "path": "agents/tiktok-creative-strategist.md",
+      "checksum": "3d07fd880db5657e00ea8c802dbd75a12495e55b3bcf64bca2181ecc345d228f",
+      "size": 3260
+    },
+    {
+      "path": "agents/tiktok-data-analyst.md",
+      "checksum": "21b8fb66975a5683de244891c71d17ca37b914a0a3a482db25a5848e627ed904",
+      "size": 3426
+    },
+    {
+      "path": "agents/tiktok-growth-strategist.md",
+      "checksum": "c0c914a630e92e26e397bd4de06280d88522a8f1ad7171aebf09664cf62db986",
+      "size": 3295
+    },
+    {
+      "path": "agents/tiktok-trend-researcher.md",
+      "checksum": "2b01b5584c0e01416f5af88206dabebd8cdefd81f17033d1801f386c50a55ab0",
+      "size": 3196
+    },
+    {
+      "path": "metadata.json",
+      "checksum": "1980e2e62ff30b2fdcd53e2b3d90c844e057d828dc6550596600a1e93382cdaa",
+      "size": 85
+    },
+    {
+      "path": "rules/tiktok-agent-protocol.md",
+      "checksum": "bfeff27e7080694b392b96ec481183847cdc3f8eb5f3c976443085db19c081de",
+      "size": 2501
+    },
+    {
+      "path": "rules/tiktok-data-rules.md",
+      "checksum": "2fd254d80ff81bf9f02ed7cce5ef598be0cb52fafec1b6e69dc2dd1f4a4491ef",
+      "size": 3256
+    },
+    {
+      "path": "rules/tiktok-mcp-routing.md",
+      "checksum": "e69d0530bce599576c3ba3bd8b364e0b4ca833e6e2f9edf80e23960b1551934f",
+      "size": 2193
+    },
+    {
+      "path": "rules/tiktok-research-rules.md",
+      "checksum": "4023cd4962cbc006ebe7601f36ef6aa64d017411b1c986508f4f644bbebb4356",
+      "size": 2506
+    },
+    {
+      "path": "schemas/tk-config.schema.json",
+      "checksum": "db7ab33bcbcc78b528d2aa169ee79242822e6e7abcf19555d5a8619cdafa796a",
+      "size": 2363
+    },
+    {
+      "path": "settings.json",
+      "checksum": "abc6d7f7e712e8c3b7059b96d996bf2a72378a9cdfa51ce5887129785bacedf2",
+      "size": 38
+    },
+    {
+      "path": "skills/_shared/tiktok/connection-setup.md",
+      "checksum": "9fd1adfcf60a49ca523cdd703d6f69bb20942341d7d3729f8bef4fb34ba5fbe5",
+      "size": 3619
+    },
+    {
+      "path": "skills/_shared/tiktok/diagnostic-thresholds.md",
+      "checksum": "37aa00a6d71f9f800bb14b22185659607b41992db200c7c250bbab47ce05969e",
+      "size": 3881
+    },
+    {
+      "path": "skills/_shared/tiktok/mcp-tool-matrix.md",
+      "checksum": "579439749e1a8041533c4022d55329ecbcee6a0e441d9301524fcefc9e72de4a",
+      "size": 4547
+    },
+    {
+      "path": "skills/_shared/tiktok/metric-glossary.md",
+      "checksum": "b043ebdac46564776eba29f157dd4bb7e62a82b648b2c7946159e2dd1fa5e337",
+      "size": 3727
+    },
+    {
+      "path": "skills/_shared/tiktok/query-templates.md",
+      "checksum": "c8654d5b2fd00d126265ff019f2ae5a171237b6def1783beea3e036bf6a26a46",
+      "size": 4896
+    },
+    {
+      "path": "skills/tk-account/references/baseline-schema.md",
+      "checksum": "b99b66c07c3a7b4fd73c11e0579c85ca485c25e5e8cd610ec5b2ba1fd3cf3911",
+      "size": 2273
+    },
+    {
+      "path": "skills/tk-account/SKILL.md",
+      "checksum": "d44c8ffdf11b36027f4d6c17b38f573472f78d53d6ac413865724209ca69b1bc",
+      "size": 3065
+    },
+    {
+      "path": "skills/tk-connect/SKILL.md",
+      "checksum": "1bbdfca723e5b22406bffc064e44139f2131b646a2f5abb322775c2e453f3093",
+      "size": 2747
+    },
+    {
+      "path": "skills/tk-creative/references/creative-analysis-rubric.md",
+      "checksum": "3f9cc9b8d03746b17f0eddc65089e108442cad9d495ac712f9259a91d8c4ef71",
+      "size": 3345
+    },
+    {
+      "path": "skills/tk-creative/SKILL.md",
+      "checksum": "e81a15d3245cbd13a1734fa5c7a4122cb8c542ef05cdbbd2cfaba8f9d809530a",
+      "size": 3009
+    },
+    {
+      "path": "skills/tk-diagnose/references/cross-plane-checks.md",
+      "checksum": "21fb80e26f8800e9bed022cabf52cf372f05f61efbc95d1eb17dc799ca6e1f63",
+      "size": 3972
+    },
+    {
+      "path": "skills/tk-diagnose/SKILL.md",
+      "checksum": "48332ba93f9a1e591f65796fb0f102ff03bac3d523a80c89f7d2691998b9789d",
+      "size": 3021
+    },
+    {
+      "path": "skills/tk-direction/SKILL.md",
+      "checksum": "51e03453c76a201b5e270dc44db7d7aadc9dbe7886df59f288dd3ea92e91ff25",
+      "size": 3355
+    },
+    {
+      "path": "skills/tk-direction/templates/direction-report.md",
+      "checksum": "ecd849afbfbe04de58d9ffe8251e707612dd60b9bab41eac6ef2867b5ffb5dfe",
+      "size": 1926
+    },
+    {
+      "path": "skills/tk-research/references/research-modes.md",
+      "checksum": "87c74e44333f80c8e414c5a86a09aac8bffa8bb686b511913f3126ab4e051c99",
+      "size": 2794
+    },
+    {
+      "path": "skills/tk-research/references/source-credibility.md",
+      "checksum": "7e5380c0187ddd0e771ef7b989d2de1a5273fb31f6cdbd52fdcb374bb1c1b905",
+      "size": 2399
+    },
+    {
+      "path": "skills/tk-research/SKILL.md",
+      "checksum": "de660295c255afaf36fa0ca43022d77ae7c4931877e3bf6a460db97f0e8c2098",
+      "size": 3410
+    },
+    {
+      "path": "skills/tk-research/templates/research-report.md",
+      "checksum": "71ea1186288881099297a8c5e7458833eda4e92e5e3b53d1eece3571aa16f8d2",
+      "size": 2015
+    }
+  ]
+}

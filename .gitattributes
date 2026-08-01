@@ -1,0 +1,10 @@
+# Force LF everywhere. npm packs from the working tree, so a CRLF checkout on Windows
+# would ship bin/tk.js with a `#!/usr/bin/env node\r` shebang, which fails to execute
+# on Linux and macOS.
+* text=auto eol=lf
+
+# Never touch binaries.
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary

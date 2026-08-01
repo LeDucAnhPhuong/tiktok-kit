@@ -1,0 +1,28 @@
+name: quality-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # check-metadata-deletions compares against HEAD; a shallow clone of depth 1
+          # still has HEAD, but history makes rename detection reliable.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Quality gates
+        run: node scripts/check-all.cjs
+
+      - name: Install smoke test
+        run: node scripts/smoke-install.cjs
+
+      - name: Package contents
+        run: npm pack --dry-run
