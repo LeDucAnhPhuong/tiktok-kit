@@ -27,10 +27,12 @@ jobs:
       - name: Install smoke test
         run: node scripts/smoke-install.cjs
 
-      # Publishing under `next` until the kit has been exercised end-to-end against a
-      # real account. Diagnostic thresholds are uncalibrated; shipping them as `latest`
-      # would present provisional numbers as settled to every new installer.
+      # Published to `latest` so the install command in the README works. The 0.x
+      # version is the instability signal, not the dist-tag — a first publish under a
+      # non-latest tag leaves the package with no `latest` at all, which makes plain
+      # `npm install tiktok-kit` fail. Uncalibrated thresholds are disclosed in the
+      # README instead.
       - name: Publish
-        run: npm publish --tag next
+        run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
