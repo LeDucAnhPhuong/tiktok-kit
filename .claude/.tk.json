@@ -3,8 +3,8 @@
   "version": 1,
   "mcp": {
     "ads": {
-      "status": "unregistered",
-      "vendor": null
+      "status": "registered-but-empty",
+      "vendor": "tiktok-official"
     },
     "organic": {
       "status": "unregistered",
@@ -20,7 +20,7 @@
     "organicHandle": null
   },
   "budget": {
-    "maxQueriesPerRun": 12
+    "maxQueriesPerRun": 20
   },
   "thresholds": {},
   "paths": {

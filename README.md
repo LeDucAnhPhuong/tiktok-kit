@@ -13,11 +13,11 @@ npm install -g tiktok-kit
 tk init
 ```
 
-`tk init` installs the kit, then walks you through connecting your TikTok data: pick a
-vendor, paste your API key, and it writes `.mcp.json` for you. The key is read from a
-muted terminal, so it never enters a Claude conversation.
+That is the whole setup. `tk init` installs the kit and connects TikTok Ads — **no API
+key, no developer app, no questions**. It writes `.mcp.json` pointing at TikTok's own
+MCP server; you sign in through the browser the first time Claude connects.
 
-Restart Claude Code, then verify the data actually flows:
+Then restart Claude Code and verify:
 
 ```
 /tk:connect
@@ -30,14 +30,18 @@ so the two kits do not overwrite each other's settings.
 
 | Command | Does |
 |---|---|
-| `tk init [-g]` | install kit assets, then run the connection wizard |
-| `tk init --no-connect` | install only, skip the wizard |
-| `tk connect` | configure or change MCP access — new vendor, rotated key |
+| `tk init [-g]` | install the kit and connect TikTok Ads |
+| `tk init --layered` | connect the lighter ~40-tool server instead of the full ~400 |
+| `tk init --no-connect` | install only, leave `.mcp.json` alone |
+| `tk connect` | reconnect, or switch tool surface |
+| `tk connect --advanced` | add other sources — **organic data lives here** |
 | `tk status` | install mode, payload version, connected data planes, query budget |
 | `tk remove [-g]` | remove assets and unregister |
 
-The wizard is skipped automatically when there is no interactive terminal, so scripted
-and CI installs never hang.
+Nothing prompts, so scripted and CI installs work unattended.
+
+**Authorization lasts 30 days.** When an ads plane that worked last month goes quiet,
+re-authorizing is almost always the fix.
 
 ## Skills
 
@@ -68,36 +72,34 @@ authority of the data.
 
 ## Connecting Your Data
 
-`tk connect` (also run by `tk init`) offers four options and states the trade-off
-before you authorize anything:
+`tk init` connects TikTok's official MCP server. Nothing to configure: the entry is a
+URL, and authorization happens in the browser.
 
-| Option | Covers | Setup | Who holds your token |
-|---|---|---|---|
-| **TikTok official** — start here | ads | ~2 min, browser sign-in | TikTok. Nobody in the middle |
-| Hosted vendor | ads + **organic** | ~15 min, API key | a third party |
-| Self-hosted | ads | needs a TikTok developer app TikTok must approve | your machine |
-| Content plane | external | optional, for research | third-party API |
+The official server covers **ads only**. For follower, video, and completion data you
+need a second source:
 
-The official server needs no developer app and no approval — it is a bare URL and a
-browser sign-in. **Its authorization expires after 30 days**, which is the usual reason
-an ads plane that worked last month has gone quiet.
+```bash
+tk connect --advanced
+```
 
-It does not cover organic. A common pairing is official for ads plus a hosted vendor
-for organic, so only the organic half passes through a third party.
+That menu holds a hosted vendor (ads + organic, needs an API key, **a third party holds
+your TikTok token**), a self-hosted server (ads only, needs a TikTok developer app that
+TikTok must approve), and a content source for research. Each states its trade-off
+before you authorize anything.
 
-### Where your key goes
+### Credentials
 
-The wizard writes it into `.mcp.json` in the project directory and adds that file to
-`.gitignore`, because it is plaintext. If you are not in a git repo, it says so and
-leaves the file for you to protect.
+The official path stores none — `.mcp.json` holds only a URL.
 
-The key never passes through Claude: setup is a CLI job precisely so that it does not
-land in a conversation transcript. `.tk.json` records connection *state* only — never
-a token.
+Advanced sources that do need a key read it from a muted terminal and write it to
+`.mcp.json`, then add that file to `.gitignore` because it is plaintext. Setup lives in
+the CLI precisely so a key never lands in a Claude conversation transcript. `.tk.json`
+records connection *state* only, never a token.
 
-You need a TikTok account with real history for any of this to be useful. The kit
-compares 28 days against the previous 28, so an account younger than about two months
-produces noise, not insight.
+### You still need real history
+
+The kit compares 28 days against the previous 28. An account younger than about two
+months produces noise, not insight — no amount of tooling fixes that.
 
 ## What This Kit Does Not Do
 

@@ -29,6 +29,11 @@ function tk(cwd, ...args) {
   return execFileSync(process.execPath, [BIN, ...args], { cwd, encoding: 'utf8' });
 }
 
+function readJson(file) {
+  if (!fs.existsSync(file)) return null;
+  return JSON.parse(fs.readFileSync(file, 'utf8'));
+}
+
 function countFiles(dir) {
   if (!fs.existsSync(dir)) return 0;
   return fs.readdirSync(dir, { withFileTypes: true }).reduce((n, e) => {
@@ -57,19 +62,26 @@ function main() {
   check('idempotent: re-init adds nothing', countFiles(claudeA) === firstCount);
   check('status: runs clean', tk(a, 'status').includes('data planes'));
 
-  // The wizard must never block a non-interactive install; without the TTY guard,
-  // `tk init` in CI would hang waiting on stdin.
-  const c = path.join(tmp, 'wizard');
+  // Connecting asks nothing and stores no secret, so a plain `tk init` must produce a
+  // working .mcp.json even with no terminal attached.
+  const mcpA = readJson(path.join(a, '.mcp.json'));
+  check('connect: .mcp.json written unattended', Boolean(mcpA));
+  check('connect: official server entry', mcpA?.mcpServers?.['tiktok-ads']?.url?.includes('open_mcp/tt-ads-mcp-flat'));
+  check('connect: type http for remote server', mcpA?.mcpServers?.['tiktok-ads']?.type === 'http');
+  check('connect: no credential stored', !mcpA?.mcpServers?.['tiktok-ads']?.env);
+
+  const c = path.join(tmp, 'layered');
   fs.mkdirSync(c);
-  const noTty = tk(c, 'init');
-  check('wizard: skipped without a TTY', noTty.includes('no interactive terminal'));
-  check('wizard: no .mcp.json written unattended', !fs.existsSync(path.join(c, '.mcp.json')));
+  tk(c, 'init', '--layered');
+  const mcpC = readJson(path.join(c, '.mcp.json'));
+  check('--layered: picks the lighter server', mcpC?.mcpServers?.['tiktok-ads']?.url?.includes('tt-ads-mcp-layer'));
 
   const d = path.join(tmp, 'no-connect');
   fs.mkdirSync(d);
   const optedOut = tk(d, 'init', '--no-connect');
   check('--no-connect: points at tk connect', optedOut.includes('tk connect'));
   check('--no-connect: payload still installed', fs.existsSync(path.join(d, '.claude', 'metadata.json')));
+  check('--no-connect: no .mcp.json touched', !fs.existsSync(path.join(d, '.mcp.json')));
 
   // --- coexist ---
   const b = path.join(tmp, 'coexist');
