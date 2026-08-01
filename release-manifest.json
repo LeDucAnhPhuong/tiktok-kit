@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "files": [
     {
       "path": "agents/tiktok-creative-strategist.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": "metadata.json",
-      "checksum": "1980e2e62ff30b2fdcd53e2b3d90c844e057d828dc6550596600a1e93382cdaa",
+      "checksum": "72d6b60533224055abd88440997d60bbeba60f86cae336ec3130bcd954dda4f0",
       "size": 85
     },
     {
@@ -93,8 +93,8 @@
     },
     {
       "path": "skills/tk-connect/SKILL.md",
-      "checksum": "1bbdfca723e5b22406bffc064e44139f2131b646a2f5abb322775c2e453f3093",
-      "size": 2747
+      "checksum": "b46d9a50114d5a400e8b9f2b9529dc25d66f7c9b25a3d439d655e19417093759",
+      "size": 3398
     },
     {
       "path": "skills/tk-creative/references/creative-analysis-rubric.md",

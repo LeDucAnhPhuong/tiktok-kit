@@ -57,6 +57,20 @@ function main() {
   check('idempotent: re-init adds nothing', countFiles(claudeA) === firstCount);
   check('status: runs clean', tk(a, 'status').includes('data planes'));
 
+  // The wizard must never block a non-interactive install; without the TTY guard,
+  // `tk init` in CI would hang waiting on stdin.
+  const c = path.join(tmp, 'wizard');
+  fs.mkdirSync(c);
+  const noTty = tk(c, 'init');
+  check('wizard: skipped without a TTY', noTty.includes('no interactive terminal'));
+  check('wizard: no .mcp.json written unattended', !fs.existsSync(path.join(c, '.mcp.json')));
+
+  const d = path.join(tmp, 'no-connect');
+  fs.mkdirSync(d);
+  const optedOut = tk(d, 'init', '--no-connect');
+  check('--no-connect: points at tk connect', optedOut.includes('tk connect'));
+  check('--no-connect: payload still installed', fs.existsSync(path.join(d, '.claude', 'metadata.json')));
+
   // --- coexist ---
   const b = path.join(tmp, 'coexist');
   fs.mkdirSync(path.join(b, '.claude'), { recursive: true });

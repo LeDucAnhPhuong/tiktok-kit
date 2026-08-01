@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/tiktok-kit/schemas/tk-config.schema.json",
+  "title": "TikTok Kit project configuration",
+  "description": "Project-level state for TikTok Kit. Records which MCP data planes are reachable and how much query budget one run may spend. Never holds credentials.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "type": "integer", "const": 1 },
+    "mcp": {
+      "type": "object",
+      "description": "Connection state per data plane. Written by /tk:connect.",
+      "additionalProperties": false,
+      "properties": {
+        "ads": { "$ref": "#/definitions/plane" },
+        "organic": { "$ref": "#/definitions/plane" },
+        "external": { "$ref": "#/definitions/plane" }
+      }
+    },
+    "account": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "advertiserId": { "type": ["string", "null"] },
+        "organicHandle": { "type": ["string", "null"] }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "maxQueriesPerRun": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Upper bound on MCP queries a single skill run may spend. Metered vendors bill per query; a free tier can be exhausted in one careless run."
+        }
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "description": "Per-account overrides of diagnostic thresholds. Keys match entries in diagnostic-thresholds.md.",
+      "additionalProperties": { "type": ["number", "string", "boolean"] }
+    },
+    "paths": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "reports": { "type": "string" }
+      }
+    }
+  },
+  "definitions": {
+    "plane": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["unregistered", "registered-but-empty", "connected"],
+          "description": "unregistered = MCP tool absent from the client; registered-but-empty = tool present but no sources linked; connected = data reachable. The fix differs for each."
+        },
+        "vendor": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "./schemas/tk-config.schema.json",
+  "version": 1,
+  "mcp": {
+    "ads": {
+      "status": "unregistered",
+      "vendor": null
+    },
+    "organic": {
+      "status": "unregistered",
+      "vendor": null
+    },
+    "external": {
+      "status": "unregistered",
+      "vendor": null
+    }
+  },
+  "account": {
+    "advertiserId": null,
+    "organicHandle": null
+  },
+  "budget": {
+    "maxQueriesPerRun": 12
+  },
+  "thresholds": {},
+  "paths": {
+    "reports": "reports/tiktok"
+  }
+}

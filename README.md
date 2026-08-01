@@ -10,11 +10,14 @@ in Ads Manager.
 
 ```bash
 npm install -g tiktok-kit
-tk init          # into ./.claude for this project
-tk init -g       # into ~/.claude for every project
+tk init
 ```
 
-Then in Claude Code:
+`tk init` installs the kit, then walks you through connecting your TikTok data: pick a
+vendor, paste your API key, and it writes `.mcp.json` for you. The key is read from a
+muted terminal, so it never enters a Claude conversation.
+
+Restart Claude Code, then verify the data actually flows:
 
 ```
 /tk:connect
@@ -27,9 +30,14 @@ so the two kits do not overwrite each other's settings.
 
 | Command | Does |
 |---|---|
-| `tk init [-g]` | install kit assets, register the kit, create `.tk.json` |
+| `tk init [-g]` | install kit assets, then run the connection wizard |
+| `tk init --no-connect` | install only, skip the wizard |
+| `tk connect` | configure or change MCP access — new vendor, rotated key |
 | `tk status` | install mode, payload version, connected data planes, query budget |
 | `tk remove [-g]` | remove assets and unregister |
+
+The wizard is skipped automatically when there is no interactive terminal, so scripted
+and CI installs never hang.
 
 ## Skills
 
@@ -60,16 +68,29 @@ authority of the data.
 
 ## Connecting Your Data
 
-`/tk:connect` walks you through it and states the trade-off before you authorize
-anything. In short:
+`tk connect` (also run by `tk init`) offers three options and states the trade-off
+before you authorize anything:
 
-- **Hosted vendor** — covers ads and organic, ~15 minutes, free tier available. **A
-  third party holds your TikTok OAuth token.**
+- **Hosted** — covers ads and organic, ~15 minutes, free tier available. **A third
+  party holds your TikTok OAuth token.**
 - **Self-hosted** — no third party holds tokens, but ads-only and requires a TikTok
-  developer app that TikTok must approve first.
+  developer app that TikTok must approve first. Adds the pixel-health check, without
+  which `dataTrust` can never reach `trusted`.
+- **Content plane** — optional, for the outside half of research.
 
-The kit never asks for or stores credentials. `.tk.json` records connection *state*
-only.
+### Where your key goes
+
+The wizard writes it into `.mcp.json` in the project directory and adds that file to
+`.gitignore`, because it is plaintext. If you are not in a git repo, it says so and
+leaves the file for you to protect.
+
+The key never passes through Claude: setup is a CLI job precisely so that it does not
+land in a conversation transcript. `.tk.json` records connection *state* only — never
+a token.
+
+You need a TikTok account with real history for any of this to be useful. The kit
+compares 28 days against the previous 28, so an account younger than about two months
+produces noise, not insight.
 
 ## What This Kit Does Not Do
 
