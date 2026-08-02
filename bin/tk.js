@@ -2,7 +2,7 @@
 'use strict';
 
 const { runInit, runStatus, runRemove } = require('../lib/install.js');
-const { runConnect, authorize, DEFAULT_SERVER } = require('../lib/connect.js');
+const { runConnect, authorize, selectLanguage, DEFAULT_SERVER } = require('../lib/connect.js');
 
 const HELP = `
 tk — TikTok Kit for Claude Code
@@ -14,6 +14,7 @@ Usage
   tk init --lang vi|en     Set output language without being asked
   tk init --scope project  Register in .mcp.json so teammates get it via git
   tk init --no-auth        Skip the browser authorization step
+  tk lang [vi|en]          Change the output language (prompts when no value given)
   tk auth                  Authorize with TikTok (also re-auth after 30 days)
   tk auth --no-browser     Print the URL instead of opening a browser (SSH)
   tk connect               Reconnect or switch tool surface
@@ -40,7 +41,9 @@ function parse(argv) {
   const scopeArg = args[args.indexOf('--scope') + 1];
   const scope = args.includes('--scope') && scopeArg === 'project' ? 'project' : 'user';
   const langArg = args[args.indexOf('--lang') + 1];
-  const lang = args.includes('--lang') && ['vi', 'en'].includes(langArg) ? langArg : null;
+  const positional = args.filter((a) => !a.startsWith('-'));
+  const bareLang = positional[0] === 'lang' && ['vi', 'en'].includes(positional[1]) ? positional[1] : null;
+  const lang = (args.includes('--lang') && ['vi', 'en'].includes(langArg) ? langArg : null) || bareLang;
   const command = args.find((a) => !a.startsWith('-'));
   return { command, global, connect, advanced, variant, scope, lang, auth, noBrowser, args };
 }
@@ -66,6 +69,11 @@ async function main() {
       console.log('tk: authorized. Run /tk:connect in Claude Code to verify.');
       return 0;
     }
+    case 'lang':
+      // Language is the one setting a user changes after install, so it needs a way in
+      // that is not hand-editing .tk.json.
+      await selectLanguage({ interactive: true, lang });
+      return 0;
     case 'connect':
       return runConnect({ interactive: true, advanced, variant, scope });
     case 'status':

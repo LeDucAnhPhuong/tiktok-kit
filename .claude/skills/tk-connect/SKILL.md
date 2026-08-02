@@ -9,7 +9,7 @@ license: MIT
 argument-hint: "[plane]"
 metadata:
   author: tiktok-kit
-  version: "0.5.0"
+  version: "0.7.0"
 ---
 
 # tk:connect
@@ -57,10 +57,11 @@ connected". Work down this list before suspecting anything else:
    servers behind an approval prompt. Declined or dismissed, the server never loads.
    `claude mcp reset-project-choices` clears the decision.
 3. **Never authorized.** The server connects, but no OAuth has happened, so every call
-   returns nothing. The fix is `/mcp` → select the server → Authenticate. This is the
-   most common false alarm: the setup looks complete and reads empty.
+   returns nothing. Tell the user to run `tk auth` in a terminal, or `/mcp` → select the
+   server → Authenticate. This is the most common false alarm: the setup looks complete
+   and reads empty.
 4. **Authorization expired.** The official ads server authorizes for 30 days. A plane
-   that worked last month goes quiet with no other change. Same fix as 3.
+   that worked last month goes quiet with no other change. Same fix as 3: `tk auth`.
 
 When the ads plane is `registered-but-empty` and `.tk.json` records the official
 vendor, name causes 3 and 4 first. Do not describe the setup as broken.

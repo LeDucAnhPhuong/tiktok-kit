@@ -38,6 +38,7 @@ tk auth
 | `tk init --layered` | connect the lighter ~40-tool server instead of the full ~400 |
 | `tk init --no-connect` | install only, register nothing |
 | `tk init --no-auth` | register the server but skip the browser step |
+| `tk lang [vi|en]` | change the output language after install |
 | `tk auth` | authorize with TikTok — also how you re-auth every 30 days |
 | `tk auth --no-browser` | print the URL instead of opening a browser (SSH) |
 | `tk connect` | reconnect, or switch tool surface |

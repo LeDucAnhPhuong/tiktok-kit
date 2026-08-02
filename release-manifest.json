@@ -1,5 +1,5 @@
 {
-  "version": "0.7.0",
+  "version": "0.7.1",
   "files": [
     {
       "path": "agents/tiktok-creative-strategist.md",
@@ -23,7 +23,7 @@
     },
     {
       "path": "metadata.json",
-      "checksum": "df677a82525c70dc9dd95f2dc033e43f2f1064a1d258fa0a620c34e23d407315",
+      "checksum": "b2c596c5206a8654333160abd1dad6e4ff4059b5ffde4de3db546c004d5dd777",
       "size": 85
     },
     {
