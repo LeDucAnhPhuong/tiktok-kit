@@ -50,6 +50,13 @@ to check, not as a source.
 - `skills/tk-research/references/source-credibility.md` — source tiers and windows
 - `skills/_shared/tiktok/mcp-tool-matrix.md` — external-plane capabilities
 
+## Language
+
+Write prose in the language from `locale.responseLanguage` in `.claude/.tk.json`
+(`vi` default, `en` available), unless the caller asked otherwise. Metric names,
+numbers, entity names, threshold keys, and status tokens stay verbatim — see
+`rules/tiktok-output-language.md`.
+
 ## Return Format
 
 Findings with sources, then:

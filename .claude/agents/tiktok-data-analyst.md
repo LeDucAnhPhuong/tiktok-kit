@@ -46,6 +46,13 @@ Verify every item before returning:
 - `skills/_shared/tiktok/metric-glossary.md` — metric semantics
 - `skills/_shared/tiktok/diagnostic-thresholds.md` — what counts as notable
 
+## Language
+
+Write prose in the language from `locale.responseLanguage` in `.claude/.tk.json`
+(`vi` default, `en` available), unless the caller asked otherwise. Metric names,
+numbers, entity names, threshold keys, and status tokens stay verbatim — see
+`rules/tiktok-output-language.md`.
+
 ## Return Format
 
 Findings list, then:

@@ -46,6 +46,13 @@ make must be traceable to someone else's cited number.
 - `skills/tk-direction/templates/direction-report.md` — output shape
 - `skills/_shared/tiktok/diagnostic-thresholds.md` — confidence per threshold
 
+## Language
+
+Write prose in the language from `locale.responseLanguage` in `.claude/.tk.json`
+(`vi` default, `en` available), unless the caller asked otherwise. Metric names,
+numbers, entity names, threshold keys, and status tokens stay verbatim — see
+`rules/tiktok-output-language.md`.
+
 ## Return Format
 
 The direction report, then:

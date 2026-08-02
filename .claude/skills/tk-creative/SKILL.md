@@ -71,6 +71,16 @@ falsify each pattern.
 - For each pattern: the evidence, and a concrete test that would confirm or kill it
 - Explicit statement when output is hypotheses rather than findings
 
+## Language
+
+Read `locale.responseLanguage` from `.claude/.tk.json` — `vi` (default) or `en` — and
+write prose in that language. An explicit request in the conversation overrides it for
+the rest of the session.
+
+Never translate metric names, numeric values, entity names, threshold keys, or
+`dataTrust` values: the user has to be able to match them against TikTok Ads Manager.
+Full rules in `rules/tiktok-output-language.md`.
+
 ## Workflow Position
 
 **Previous:** `/tk:diagnose`

@@ -1,74 +1,102 @@
 ---
 name: tk:connect
-description: Connect TikTok ads and organic data to Claude over MCP. Detects which data planes are reachable, distinguishes a missing MCP server from an empty one, walks through setup with the token-custody trade-off stated up front, and records connection state in .tk.json.
+description: Verify that TikTok data actually reaches Claude — probes each MCP data plane with a real call, tells apart a missing server from a linked-but-empty one, reports exactly what is broken, and records the result in .tk.json. Setup itself is done by the `tk connect` CLI, which keeps API keys out of the conversation.
 user-invocable: true
-when_to_use: "Invoke when TikTok data is not reachable, when setting up the kit for the first time, or when a tk: skill reports a missing plane. Not for connecting non-TikTok data sources."
+when_to_use: "Invoke to check whether TikTok ads and organic data are reachable, or when another tk: skill reports a missing plane. Not for entering credentials — run the `tk connect` CLI for that."
 category: tiktok
-keywords: [tiktok, mcp, connect, setup, ket noi, kết nối, cai dat, cài đặt, onboarding, ad account, tai khoan, tài khoản]
+keywords: [tiktok, mcp, connect, verify, kiem tra, kiểm tra, ket noi, kết nối, khong thay du lieu, không thấy dữ liệu, plane, ad account, tai khoan, tài khoản]
 license: MIT
 argument-hint: "[plane]"
 metadata:
   author: tiktok-kit
-  version: "0.1.0"
+  version: "0.5.0"
 ---
 
 # tk:connect
 
-Entry point. Establishes which TikTok data the kit can actually see.
+Checks whether the data planes are live. **Verification only** — configuration happens
+in the CLI.
+
+## Why The Split
+
+Writing MCP config is deterministic file editing, and it involves an API key. A key
+pasted into a Claude conversation is in the transcript and has been sent to the model.
+The `tk connect` CLI reads it from a muted terminal instead, so it never leaves the
+machine.
+
+What the CLI *cannot* do is tell whether a configured server actually returns data —
+that requires calling the MCP tools, which only happens inside a Claude Code session.
+That is this skill's entire job.
 
 ## Rules That Apply Here
 
-Restated because `rules/tiktok-data-rules.md` may not be loaded:
-
-- **Never ask for, or write, credentials.** Tokens belong in the MCP client config or
-  on the vendor platform. `.tk.json` records connection state only.
-- **Disclose token custody before the user authorizes**, not after. Hosted vendors
-  hold the user's TikTok OAuth token.
-- Present both setup paths with their real costs. Do not pick for the user.
+- **Never ask the user for a key, token, or secret.** Point them at `tk connect`.
+- **Never write a credential** into `.tk.json`, a report, or any other file.
+- Report what is broken specifically. "Not connected" is not actionable.
 
 ## Procedure
 
 ### 1. Probe
 
-Attempt the source-listing and account-listing capabilities from
-`rules/tiktok-mcp-routing.md`. Classify each plane into one of three states — the fix
-differs for each, so collapsing them wastes the user's time:
+For each plane, attempt its listing capability from `rules/tiktok-mcp-routing.md`.
+Classify into one of three states — the fix differs for each, so collapsing them wastes
+the user's time:
 
-| State | Meaning | What the user must do |
+| State | Symptom | Fix |
 |---|---|---|
-| `unregistered` | the tool itself is absent from the client | add the MCP server to the client config and restart |
-| `registered-but-empty` | tool responds, no sources linked | link the TikTok account on the vendor platform |
-| `connected` | data reachable | nothing |
+| `unregistered` | the tool is absent from the session entirely | run `tk connect`, then restart Claude Code |
+| `registered-but-empty` | tool responds, returns no sources or accounts | link the TikTok account on the vendor platform |
+| `connected` | tool returns real accounts or fields | none |
+
+Four causes account for nearly every gap, and all four look identical to a plain "not
+connected". Work down this list before suspecting anything else:
+
+1. **Client not restarted.** The server is in `.mcp.json` but the session predates it,
+   so the tool is absent entirely.
+2. **Project server not approved.** Claude Code gates project-scoped `.mcp.json`
+   servers behind an approval prompt. Declined or dismissed, the server never loads.
+   `claude mcp reset-project-choices` clears the decision.
+3. **Never authorized.** The server connects, but no OAuth has happened, so every call
+   returns nothing. The fix is `/mcp` → select the server → Authenticate. This is the
+   most common false alarm: the setup looks complete and reads empty.
+4. **Authorization expired.** The official ads server authorizes for 30 days. A plane
+   that worked last month goes quiet with no other change. Same fix as 3.
+
+When the ads plane is `registered-but-empty` and `.tk.json` records the official
+vendor, name causes 3 and 4 first. Do not describe the setup as broken.
 
 ### 2. Report
 
-Print a plane table: `ads`, `organic`, `external` with state and vendor.
+Print a plane table: `ads`, `organic`, `external` — state, vendor, and what is blocked
+by each gap. Be concrete about consequences:
 
-### 3. Guide
+- no ads plane → no spend, structure, or conversion analysis
+- no pixel capability → `dataTrust` can never reach `trusted`
+- no organic plane → no follower or content analysis
+- no external plane → research degrades to web-only
 
-For anything not `connected`, load `skills/_shared/tiktok/connection-setup.md` and
-present the applicable path. State plainly:
+### 3. Persist
 
-- what it costs
-- how long approval takes
-- **who ends up holding the TikTok OAuth token**
-
-### 4. Persist
-
-Write `mcp.<plane>.status` and `mcp.<plane>.vendor` into `.claude/.tk.json`. Set
-`budget.maxQueriesPerRun` from the tier table in the setup reference.
-
-Never write a token, key, or secret into this file.
+Update `mcp.<plane>.status` in `.claude/.tk.json` with what was actually observed.
+Leave `vendor` as the CLI set it.
 
 ## Output
 
-- Plane status table
-- Setup steps for missing planes, with trade-offs
-- Confirmation of what was written to `.tk.json`
-- What the user can run next
+Plane status table, the specific blocker per gap, and the single next command to run.
+
+When nothing is connected, say so plainly and stop. Never fabricate a baseline.
+
+## Language
+
+Read `locale.responseLanguage` from `.claude/.tk.json` — `vi` (default) or `en` — and
+write prose in that language. An explicit request in the conversation overrides it for
+the rest of the session.
+
+Never translate metric names, numeric values, entity names, threshold keys, or
+`dataTrust` values: the user has to be able to match them against TikTok Ads Manager.
+Full rules in `rules/tiktok-output-language.md`.
 
 ## Workflow Position
 
-**Next:** `/tk:account` — baseline the account once at least one plane is connected.
-
-With no plane connected, say so directly and stop. Do not fabricate a baseline.
+**Previous:** `tk connect` (CLI)
+**Next:** `/tk:account` — baseline the account once at least one plane is live.

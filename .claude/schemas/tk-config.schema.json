@@ -37,6 +37,17 @@
         }
       }
     },
+    "locale": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "responseLanguage": {
+          "type": "string",
+          "enum": ["vi", "en"],
+          "description": "Prose language for tk: skill and tiktok-* agent output. Metric names, numeric values, tool names, and file paths are never translated — they must stay matchable against TikTok's own UI."
+        }
+      }
+    },
     "thresholds": {
       "type": "object",
       "description": "Per-account overrides of diagnostic thresholds. Keys match entries in diagnostic-thresholds.md.",
