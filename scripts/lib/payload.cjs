@@ -27,8 +27,15 @@ function markdownFiles() {
   return walk(PAYLOAD).filter((f) => f.endsWith('.md'));
 }
 
-/** Parse the leading `---` frontmatter block. Returns null when absent or unclosed. */
-function frontmatter(text) {
+/**
+ * Parse the leading `---` frontmatter block. Returns null when absent or unclosed.
+ *
+ * CRLF is normalized first: a contributor editing on Windows can easily save CRLF, and
+ * a parser that only looks for "\n---" then reports every field as missing — a confusing
+ * failure that has nothing to do with the field it names.
+ */
+function frontmatter(raw) {
+  const text = raw.replace(/\r\n/g, '\n');
   if (!text.startsWith('---')) return null;
   const end = text.indexOf('\n---', 3);
   if (end === -1) return null;

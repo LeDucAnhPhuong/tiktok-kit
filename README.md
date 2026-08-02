@@ -13,41 +13,43 @@ npm install -g tiktok-kit
 tk init
 ```
 
-That is the whole setup on the CLI side. `tk init` installs the kit and connects TikTok
-Ads — **no API key, no developer app, no questions**. It writes `.mcp.json` pointing at
-TikTok's own MCP server.
+`tk init` does the whole setup: installs the kit, asks your output language, registers
+TikTok's official MCP server in Claude Code, and opens your browser to authorize.
 
-Then, inside Claude Code:
+No API key, no developer app, no approval wait.
 
-1. **Restart** so the new server is picked up.
-2. **Approve** the project MCP server when prompted — Claude Code gates project-scoped
-   `.mcp.json` servers before first use.
-3. **`/mcp`** → pick `tiktok-ads` → **Authenticate**. A browser opens: sign in to TikTok
-   Ads Manager, review the permissions, click Authorize.
-4. **`/tk:connect`** to verify data is flowing.
+Then open Claude Code and run:
 
-Step 3 is the one people skip. Without it the server is connected but unauthorized, and
-every plane reads empty — which looks exactly like a broken setup.
+```
+/tk:connect
+```
 
-Works standalone. If ClaudeKit is installed, `tk init` registers itself in `.ck.json`
-so the two kits do not overwrite each other's settings.
+If you skipped the browser step, or 30 days have passed and authorization expired:
+
+```bash
+tk auth
+```
 
 ## Commands
 
 | Command | Does |
 |---|---|
-| `tk init [-g]` | install the kit and connect TikTok Ads |
+| `tk init [-g]` | install, register the server, and authorize — the whole setup |
 | `tk init --layered` | connect the lighter ~40-tool server instead of the full ~400 |
-| `tk init --no-connect` | install only, leave `.mcp.json` alone |
+| `tk init --no-connect` | install only, register nothing |
+| `tk init --no-auth` | register the server but skip the browser step |
+| `tk auth` | authorize with TikTok — also how you re-auth every 30 days |
+| `tk auth --no-browser` | print the URL instead of opening a browser (SSH) |
 | `tk connect` | reconnect, or switch tool surface |
 | `tk connect --advanced` | add other sources — **organic data lives here** |
 | `tk status` | install mode, payload version, connected data planes, query budget |
 | `tk remove [-g]` | remove assets and unregister |
 
-Nothing prompts, so scripted and CI installs work unattended.
+Scripted and CI installs skip both the language prompt and the browser step
+automatically, so nothing hangs.
 
 **Authorization lasts 30 days.** When an ads plane that worked last month goes quiet,
-re-authorizing is almost always the fix.
+`tk auth` is almost always the fix.
 
 ## Skills
 

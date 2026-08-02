@@ -2,7 +2,7 @@
 'use strict';
 
 const { runInit, runStatus, runRemove } = require('../lib/install.js');
-const { runConnect } = require('../lib/connect.js');
+const { runConnect, authorize, DEFAULT_SERVER } = require('../lib/connect.js');
 
 const HELP = `
 tk — TikTok Kit for Claude Code
@@ -13,6 +13,9 @@ Usage
   tk init --no-connect     Install only, do not register any MCP server
   tk init --lang vi|en     Set output language without being asked
   tk init --scope project  Register in .mcp.json so teammates get it via git
+  tk init --no-auth        Skip the browser authorization step
+  tk auth                  Authorize with TikTok (also re-auth after 30 days)
+  tk auth --no-browser     Print the URL instead of opening a browser (SSH)
   tk connect               Reconnect or switch tool surface
   tk connect --advanced    Add other sources — organic data lives here
   tk status                Show install mode, version, and connected data planes
@@ -31,17 +34,19 @@ function parse(argv) {
   const global = args.includes('-g') || args.includes('--global');
   const connect = !args.includes('--no-connect');
   const advanced = args.includes('--advanced');
+  const auth = !args.includes('--no-auth');
+  const noBrowser = args.includes('--no-browser');
   const variant = args.includes('--layered') ? 'layer' : 'flat';
   const scopeArg = args[args.indexOf('--scope') + 1];
   const scope = args.includes('--scope') && scopeArg === 'project' ? 'project' : 'user';
   const langArg = args[args.indexOf('--lang') + 1];
   const lang = args.includes('--lang') && ['vi', 'en'].includes(langArg) ? langArg : null;
   const command = args.find((a) => !a.startsWith('-'));
-  return { command, global, connect, advanced, variant, scope, lang, args };
+  return { command, global, connect, advanced, variant, scope, lang, auth, noBrowser, args };
 }
 
 async function main() {
-  const { command, global, connect, advanced, variant, scope, lang, args } = parse(process.argv);
+  const { command, global, connect, advanced, variant, scope, lang, auth, noBrowser, args } = parse(process.argv);
 
   if (args.includes('--version') || args.includes('-v')) {
     console.log(require('../package.json').version);
@@ -50,7 +55,17 @@ async function main() {
 
   switch (command) {
     case 'init':
-      return runInit({ global, connect, variant, lang, scope });
+      return runInit({ global, connect, variant, lang, scope, auth });
+    case 'auth': {
+      const r = authorize(DEFAULT_SERVER, { noBrowser });
+      if (!r.ok) {
+        console.error(`tk: authorization failed (${r.reason})`);
+        console.error('    Is the server registered? Try `tk init` first.');
+        return 1;
+      }
+      console.log('tk: authorized. Run /tk:connect in Claude Code to verify.');
+      return 0;
+    }
     case 'connect':
       return runConnect({ interactive: true, advanced, variant, scope });
     case 'status':
